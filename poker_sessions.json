@@ -14,5 +14,13 @@
     "fees": 6.25,
     "profit_loss": 22.86,
     "notes": ""
+  },
+  {
+    "date": "2025-07-18T00:35:37.940646",
+    "buy_in": 0.0,
+    "cash_out": 36.11,
+    "fees": 0.0,
+    "profit_loss": 36.11,
+    "notes": ""
   }
 ]

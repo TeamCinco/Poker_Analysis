@@ -7,9 +7,9 @@ class Display:
         print("POKER TRACKER STATS")
         print("="*40)
         print(f"Total Sessions: {stats['total_sessions']}")
-        print(f"Total Money In: ${stats['total_buy_ins']:.2f}")
-        print(f"Total Money Out: ${stats['total_cash_outs']:.2f}")
+        print(f"Total Deposits: ${stats['total_deposits']:.2f}")
         print(f"Total Fees: ${stats['total_fees']:.2f}")
+        print(f"Current Bankroll: ${stats['current_bankroll']:.2f}")
         print(f"Net Profit/Loss: ${stats['total_profit_loss']:.2f}")
         
         # Add up/down indicator
@@ -28,9 +28,16 @@ class Display:
     def show_recent_sessions(sessions, num_sessions=10):
         recent = sessions[-num_sessions:]
         print(f"\nLast {len(recent)} Sessions:")
-        print("-" * 60)
+        print("-" * 70)
         for i, session in enumerate(recent, 1):
             date = datetime.datetime.fromisoformat(session['date']).strftime('%m/%d %H:%M')
             profit_loss = session['profit_loss']
             sign = "+" if profit_loss > 0 else ""
-            print(f"{i:2d}. {date} | In: ${session['buy_in']:6.2f} | Out: ${session['cash_out']:6.2f} | {sign}${profit_loss:6.2f}")
+            
+            # Handle both old and new session formats
+            if 'new_deposit' in session:
+                deposit_info = f"(+${session['new_deposit']:.2f})" if session['new_deposit'] > 0 else "(cont.)"
+            else:
+                deposit_info = f"(+${session['buy_in']:.2f})"
+            
+            print(f"{i:2d}. {date} | {deposit_info} | Out: ${session['cash_out']:6.2f} | {sign}${profit_loss:6.2f}")
