@@ -1,0 +1,1 @@
+# we analyze poker like stock stuff.... maybe there are rules and ideas we can extract from this game theory / probability / luck randomeness game.
