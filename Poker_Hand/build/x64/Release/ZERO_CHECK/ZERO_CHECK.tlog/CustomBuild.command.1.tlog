@@ -1,0 +1,10 @@
+^C:\USERS\CINCO\DESKTOP\POKER_ANALYSIS\POKER_HAND\BUILD\CMAKEFILES\0614C0EEE449BA85DAA3469612DFC526\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/cinco/Desktop/Poker_Analysis/Poker_Hand -BC:/Users/cinco/Desktop/Poker_Analysis/Poker_Hand/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/cinco/Desktop/Poker_Analysis/Poker_Hand/build/PokerHandAnalysis.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
