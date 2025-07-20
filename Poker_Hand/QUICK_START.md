@@ -96,6 +96,14 @@ cd build
 # Generate training data
 .\poker_analysis_generator data
 
+# ranges / pre flop
+
+.\poker_analysis_generator ranges
+
+.\poker_analysis_generator preflop
+
+
+
 # Check help
 .\poker_analysis_generator help
 ```
