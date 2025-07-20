@@ -2,6 +2,8 @@
 
 import streamlit as st
 from config.position_options import PositionConfig
+from core.session_manager import SessionManager
+from typing import Tuple, Dict
 
 class UIComponents:
     """Reusable UI components."""
@@ -12,8 +14,78 @@ class UIComponents:
         st.title("♠️ Poker Hand Trainer ♠️")
     
     @staticmethod
+    def display_enhanced_training_selector() -> Dict[str, str]:
+        """Display enhanced training configuration selector."""
+        st.subheader("🎯 Training Configuration")
+        
+        config = SessionManager.get_current_training_config()
+        loader = st.session_state[SessionManager.EXCEL_LOADER_KEY]
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            # Table Size Selector
+            available_table_sizes = loader.get_available_table_sizes()
+            if available_table_sizes:
+                current_table_size = config["table_size"]
+                table_size_index = available_table_sizes.index(current_table_size) if current_table_size in available_table_sizes else 0
+                
+                selected_table_size = st.selectbox(
+                    "Table Size:",
+                    options=available_table_sizes,
+                    index=table_size_index,
+                    key="table_size_selector"
+                )
+                
+                if selected_table_size != current_table_size:
+                    SessionManager.update_table_size(selected_table_size)
+                    st.rerun()
+        
+        with col2:
+            # Position Selector
+            available_positions = PositionConfig.get_positions_for_table_size(config["table_size"])
+            if available_positions:
+                current_position = config["position"]
+                position_index = available_positions.index(current_position) if current_position in available_positions else 0
+                
+                selected_position = st.selectbox(
+                    "Position:",
+                    options=available_positions,
+                    format_func=lambda x: PositionConfig.get_position_full_name(x),
+                    index=position_index,
+                    key="position_selector"
+                )
+                
+                if selected_position != current_position:
+                    SessionManager.update_position(selected_position)
+                    st.rerun()
+        
+        with col3:
+            # Action Selector
+            available_actions = PositionConfig.get_available_actions()
+            current_action = config["action"]
+            action_index = available_actions.index(current_action) if current_action in available_actions else 0
+            
+            selected_action = st.selectbox(
+                "Action:",
+                options=available_actions,
+                index=action_index,
+                key="action_selector"
+            )
+            
+            if selected_action != current_action:
+                SessionManager.update_action(selected_action)
+                st.rerun()
+        
+        # Display current scenario
+        scenario_display = SessionManager.get_current_scenario_display()
+        st.info(f"🎲 Current Scenario: **{scenario_display}**")
+        
+        return SessionManager.get_current_training_config()
+    
+    @staticmethod
     def display_position_selector(current_position: str) -> str:
-        """Display position selection interface."""
+        """Display legacy position selection interface (for backward compatibility)."""
         st.subheader("🎯 Select Training Position:")
         
         selected_position = st.selectbox(

@@ -15,12 +15,8 @@ class TrainingEngine:
     
     def run_training_loop(self):
         """Run the main training loop."""
-        # Handle position selection
-        current_position = SessionManager.get_selected_position()
-        selected_position = UIComponents.display_position_selector(current_position)
-        
-        # Update position if changed
-        SessionManager.update_position(selected_position)
+        # Display enhanced training configuration selector
+        training_config = UIComponents.display_enhanced_training_selector()
         
         # Display accuracy stats
         score, total_answered = SessionManager.get_score_data()

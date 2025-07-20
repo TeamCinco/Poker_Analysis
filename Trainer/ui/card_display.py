@@ -101,19 +101,51 @@ class CardDisplay:
     def display_cards(cls, hand: str) -> str:
         """Display cards with visual styling based on hand type."""
         if hand.endswith('s'):
-            # Suited hand
-            cards = hand[:-1].split('-')
-            card1 = cls.get_card_symbol(cards[0])
-            card2 = cls.get_card_symbol(cards[1])
+            # Suited hand (e.g., "AKs")
+            hand_base = hand[:-1]  # Remove 's'
+            if len(hand_base) == 2:
+                card1 = cls.get_card_symbol(hand_base[0])
+                card2 = cls.get_card_symbol(hand_base[1])
+            else:
+                # Handle hands like "T9s" where T = 10
+                card1 = cls.get_card_symbol(hand_base[0])
+                card2 = cls.get_card_symbol(hand_base[1])
             return cls.display_suited_cards(card1, card2)
         elif hand.endswith('o'):
-            # Offsuit hand
-            cards = hand[:-1].split('-')
-            card1 = cls.get_card_symbol(cards[0])
-            card2 = cls.get_card_symbol(cards[1])
+            # Offsuit hand (e.g., "AKo")
+            hand_base = hand[:-1]  # Remove 'o'
+            if len(hand_base) == 2:
+                card1 = cls.get_card_symbol(hand_base[0])
+                card2 = cls.get_card_symbol(hand_base[1])
+            else:
+                card1 = cls.get_card_symbol(hand_base[0])
+                card2 = cls.get_card_symbol(hand_base[1])
             return cls.display_offsuit_cards(card1, card2)
-        else:
-            # Pocket pair
-            cards = hand.split('-')
-            card = cls.get_card_symbol(cards[0])
+        elif len(hand) == 2 and hand[0] == hand[1]:
+            # Pocket pair (e.g., "AA", "KK")
+            card = cls.get_card_symbol(hand[0])
             return cls.display_pocket_pair(card)
+        else:
+            # Handle legacy format with dashes (backward compatibility)
+            if '-' in hand:
+                if hand.endswith('s'):
+                    # Suited hand with dash format
+                    cards = hand[:-1].split('-')
+                    card1 = cls.get_card_symbol(cards[0])
+                    card2 = cls.get_card_symbol(cards[1])
+                    return cls.display_suited_cards(card1, card2)
+                elif hand.endswith('o'):
+                    # Offsuit hand with dash format
+                    cards = hand[:-1].split('-')
+                    card1 = cls.get_card_symbol(cards[0])
+                    card2 = cls.get_card_symbol(cards[1])
+                    return cls.display_offsuit_cards(card1, card2)
+                else:
+                    # Pocket pair with dash format
+                    cards = hand.split('-')
+                    card = cls.get_card_symbol(cards[0])
+                    return cls.display_pocket_pair(card)
+            else:
+                # Fallback - treat as pocket pair
+                card = cls.get_card_symbol(hand[0])
+                return cls.display_pocket_pair(card)

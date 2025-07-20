@@ -49,17 +49,29 @@ Then access via the Network URL shown in terminal.
 
 - **Clean Modular Architecture**: Each file has single responsibility, under 150 lines
 - **Visual Card Display**: Beautiful card rendering with proper suits and colors
-- **Position-Based Training**: Multiple position scenarios (Any Position, Mid/Late, Late Position)
+- **Comprehensive Position Training**: All specific positions for 6-max and 9-max tables
+- **Multiple Action Types**: Opening Raise, 3-Bet, and 4-Bet scenarios
+- **Excel Data Integration**: Uses comprehensive poker range data from generated Excel files
 - **Real-time Scoring**: Track accuracy and progress
 - **Responsive Design**: Works great on desktop and mobile
 - **Easy to Extend**: Modular design makes adding new features simple
 
 ## 🎯 Training Modes
 
-- **Any Position**: Premium hands playable from any position
-- **Mid/Late Position**: Expanded ranges for better positions
-- **Late Position**: Full range including speculative hands
-- **All Positions**: Combined training across all scenarios
+### **Table Sizes**
+- **6-Max Tables**: UTG, HJ, CO, BTN, SB, BB positions
+- **9-Max Tables**: UTG, UTG1, MP1, MP2, HJ, CO, BTN, SB, BB positions
+
+### **Action Types**
+- **Opening Raise**: Learn optimal opening ranges for each position
+- **3-Bet**: Master 3-betting decisions across positions  
+- **4-Bet**: Practice advanced 4-betting scenarios
+
+### **Training Examples**
+- **6-max UTG Opening Raise**: Tight opening ranges from early position
+- **9-max Button 3-Bet**: Aggressive 3-betting from the button
+- **6-max Small Blind 4-Bet**: Advanced 4-betting from the small blind
+- **Any Position/Action Combination**: Over 45 different training scenarios available
 
 ## 🏛️ Architecture Benefits
 
