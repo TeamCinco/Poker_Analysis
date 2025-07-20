@@ -2,6 +2,8 @@
 
 #include "types.hpp"
 #include "monte_carlo_engine.hpp"
+#include "realistic_ranges.hpp"
+#include "../utils/csv_exporter.hpp"
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -43,6 +45,29 @@ public:
     
     // Generate comprehensive data for Python trainer
     void generate_training_data(const std::string& output_directory);
+    
+    // NEW: Realistic range-based analysis methods
+    std::vector<ActionResult> analyze_position_comprehensive(
+        const std::string& position, 
+        TableSize table_size, 
+        PokerAction action,
+        int simulations_per_hand = 1000000
+    );
+    
+    // Analyze all hands for all positions and actions
+    void generate_realistic_analysis_data(
+        const std::string& output_directory = "output",
+        int simulations_per_hand = 1000000
+    );
+    
+    // Export CSV files for specific position/action combinations
+    void export_position_action_csv(
+        const std::string& position,
+        const std::string& action_name,
+        TableSize table_size,
+        const std::string& output_directory = "output",
+        int simulations_per_hand = 1000000
+    );
     
     // Progress callback for long-running operations
     using ProgressCallback = std::function<void(int completed, int total, const std::string& current_hand)>;

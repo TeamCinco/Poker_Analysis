@@ -38,17 +38,62 @@ enum class HandType : uint8_t {
     ROYAL_FLUSH = 9
 };
 
-// Position types
-enum class Position : uint8_t {
-    UTG = 0,
-    MP = 1,
-    CO = 2,
-    BTN = 3,
-    SB = 4,
-    BB = 5
+// Table size types
+enum class TableSize : uint8_t {
+    SIX_MAX = 6,
+    NINE_MAX = 9
 };
 
-// Action types
+// Position types for 6-max and 9-max
+enum class Position : uint8_t {
+    // 6-max positions
+    UTG_6MAX = 0,
+    HJ_6MAX = 1,
+    CO_6MAX = 2,
+    BTN_6MAX = 3,
+    SB_6MAX = 4,
+    BB_6MAX = 5,
+    
+    // 9-max positions
+    UTG_9MAX = 6,
+    UTG1_9MAX = 7,
+    MP1_9MAX = 8,
+    MP2_9MAX = 9,
+    HJ_9MAX = 10,
+    CO_9MAX = 11,
+    BTN_9MAX = 12,
+    SB_9MAX = 13,
+    BB_9MAX = 14,
+    
+    // Legacy support
+    UTG = UTG_6MAX,
+    MP = HJ_6MAX,
+    CO = CO_6MAX,
+    BTN = BTN_6MAX,
+    SB = SB_6MAX,
+    BB = BB_6MAX
+};
+
+// Enhanced action types
+enum class PokerAction : uint8_t {
+    // Primary actions (prioritize these)
+    OPEN_RAISE = 0,          
+    THREE_BET = 1,           
+    FOUR_BET = 2,            
+    CALL = 3,                
+    
+    // Secondary actions
+    FOLD = 4,
+    CHECK = 5,
+    RE_RAISE = 6,
+    FIVE_BET_OR_MORE = 7,
+    CONTINUATION_BET = 8,
+    DONK_BET = 9,
+    CHECK_RAISE = 10,
+    ALL_IN = 11
+};
+
+// Legacy action support
 enum class Action : uint8_t {
     FOLD = 0,
     CALL = 1,
@@ -91,6 +136,25 @@ struct HandAnalysis {
         position_frequencies.fill(0.0);
         position_ev.fill(0.0);
     }
+};
+
+// Action result structure for CSV export
+struct ActionResult {
+    std::string hand;                    // e.g., "AA", "KQs", "72o"
+    std::string position;                // UTG, UTG1, MP1, MP2, HJ, CO, BTN, SB, BB
+    std::string action;                  // opening_raise, 3_bet, 4_bet, call
+    double win_rate;                     // decimal, e.g., 0.653 for 65.3%
+    int player_count;                    // 6 or 9
+    uint64_t simulations_run;            // number of Monte Carlo simulations
+    double expected_value;               // EV calculation
+    double confidence_interval_low;      // confidence interval lower bound
+    double confidence_interval_high;     // confidence interval upper bound
+    bool in_range;                       // true if hand is in the standard opening range for that position
+    
+    ActionResult() : hand(""), position(""), action(""), win_rate(0.0), 
+                    player_count(6), simulations_run(0), expected_value(0.0),
+                    confidence_interval_low(0.0), confidence_interval_high(0.0), 
+                    in_range(false) {}
 };
 
 // Performance statistics

@@ -141,6 +141,132 @@ void PokerAnalyzer::generate_training_data(const std::string& output_directory) 
     log_progress("Training data generation completed!");
 }
 
+std::vector<ActionResult> PokerAnalyzer::analyze_position_comprehensive(
+    const std::string& position, 
+    TableSize table_size, 
+    PokerAction action,
+    int simulations_per_hand) {
+    
+    std::vector<ActionResult> results;
+    auto all_hands = generate_all_starting_hands();
+    
+    // Convert action enum to string
+    std::string action_name;
+    switch (action) {
+        case PokerAction::OPEN_RAISE: action_name = "opening_raise"; break;
+        case PokerAction::THREE_BET: action_name = "3_bet"; break;
+        case PokerAction::FOUR_BET: action_name = "4_bet"; break;
+        case PokerAction::CALL: action_name = "call"; break;
+        default: action_name = "unknown"; break;
+    }
+    
+    log_progress("Analyzing " + std::to_string(all_hands.size()) + " hands for " + 
+                position + " " + action_name + " (" + 
+                (table_size == TableSize::SIX_MAX ? "6-max" : "9-max") + ")");
+    
+    int completed = 0;
+    for (const auto& hand : all_hands) {
+        if (progress_callback_) {
+            progress_callback_(completed, all_hands.size(), hand);
+        }
+        
+        ActionResult result;
+        result.hand = hand;
+        result.position = position;
+        result.action = action_name;
+        result.player_count = static_cast<int>(table_size);
+        result.simulations_run = simulations_per_hand;
+        
+        // Check if hand is in realistic range for this position/action
+        result.in_range = RealisticRanges::is_hand_in_range(hand, position, table_size, action);
+        
+        // Calculate appropriate number of opponents based on table size
+        int num_opponents = static_cast<int>(table_size) - 1; // minus hero
+        
+        // Run simulation with realistic opponent ranges
+        SimulationResult sim_result = engine_->simulate_hand(hand, num_opponents, simulations_per_hand);
+        
+        result.win_rate = sim_result.win_rate;
+        result.confidence_interval_low = sim_result.confidence_interval_low;
+        result.confidence_interval_high = sim_result.confidence_interval_high;
+        result.expected_value = sim_result.expected_value;
+        
+        results.push_back(result);
+        completed++;
+    }
+    
+    log_progress("Completed analysis for " + position + " " + action_name);
+    return results;
+}
+
+void PokerAnalyzer::generate_realistic_analysis_data(
+    const std::string& output_directory,
+    int simulations_per_hand) {
+    
+    log_progress("Starting realistic poker range analysis...");
+    
+    // Create folder structure first
+    CSVExporter::create_folder_structure(output_directory);
+    
+    // Actions to analyze (prioritize opening ranges first)
+    std::vector<PokerAction> actions = {
+        PokerAction::OPEN_RAISE,
+        PokerAction::THREE_BET,
+        PokerAction::FOUR_BET
+        // PokerAction::CALL can be added later
+    };
+    
+    // Analyze both table sizes
+    std::vector<TableSize> table_sizes = {TableSize::SIX_MAX, TableSize::NINE_MAX};
+    
+    for (TableSize table_size : table_sizes) {
+        std::string table_name = (table_size == TableSize::SIX_MAX) ? "6-max" : "9-max";
+        auto position_names = RealisticRanges::get_position_names(table_size);
+        
+        for (const auto& position : position_names) {
+            for (PokerAction action : actions) {
+                log_progress("Analyzing " + position + " for " + table_name);
+                
+                auto results = analyze_position_comprehensive(position, table_size, action, simulations_per_hand);
+                
+                std::string action_name;
+                switch (action) {
+                    case PokerAction::OPEN_RAISE: action_name = "opening_raise"; break;
+                    case PokerAction::THREE_BET: action_name = "3_bet"; break;
+                    case PokerAction::FOUR_BET: action_name = "4_bet"; break;
+                    default: continue; // Skip unknown actions
+                }
+                
+                CSVExporter::export_position_action_results(results, position, action_name, table_size, output_directory);
+            }
+        }
+    }
+    
+    log_progress("Realistic analysis data generation completed!");
+}
+
+void PokerAnalyzer::export_position_action_csv(
+    const std::string& position,
+    const std::string& action_name,
+    TableSize table_size,
+    const std::string& output_directory,
+    int simulations_per_hand) {
+    
+    // Convert action name to enum
+    PokerAction action;
+    if (action_name == "opening_raise") action = PokerAction::OPEN_RAISE;
+    else if (action_name == "3_bet") action = PokerAction::THREE_BET;
+    else if (action_name == "4_bet") action = PokerAction::FOUR_BET;
+    else if (action_name == "call") action = PokerAction::CALL;
+    else {
+        log_progress("Unknown action: " + action_name);
+        return;
+    }
+    
+    auto results = analyze_position_comprehensive(position, table_size, action, simulations_per_hand);
+    CSVExporter::export_position_action_results(results, position, action_name, table_size, output_directory);
+}
+
 void PokerAnalyzer::set_progress_callback(ProgressCallback callback) {
     progress_callback_ = callback;
 }

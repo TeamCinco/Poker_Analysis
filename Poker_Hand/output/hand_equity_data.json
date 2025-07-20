@@ -2,72 +2,214 @@
   "hand_equity_data": {
     "22": {
       "combinations": 6,
-      "equity_vs_random": 0.5028,
-      "equity_vs_tight": 0.4023,
-      "equity_vs_loose": 0.6034,
+      "equity_vs_random": 0.5016,
+      "equity_vs_tight": 0.4013,
+      "equity_vs_loose": 0.6020,
       "vs_opponents": {
         "1": {
-          "win_rate": 0.5028,
-          "tie_rate": 0.0193,
-          "loss_rate": 0.4779,
+          "win_rate": 0.5016,
+          "tie_rate": 0.0196,
+          "loss_rate": 0.4788,
           "simulations": 1000000,
-          "confidence_interval": [0.5019, 0.5038]
+          "confidence_interval": [0.5007, 0.5026]
         },
         "2": {
           "win_rate": 0.3084,
-          "tie_rate": 0.0123,
+          "tie_rate": 0.0124,
           "loss_rate": 0.6792,
           "simulations": 1000000,
           "confidence_interval": [0.3075, 0.3093]
         },
         "3": {
-          "win_rate": 0.2223,
+          "win_rate": 0.2227,
           "tie_rate": 0.0092,
-          "loss_rate": 0.7685,
+          "loss_rate": 0.7681,
           "simulations": 1000000,
-          "confidence_interval": [0.2215, 0.2231]
+          "confidence_interval": [0.2218, 0.2235]
         },
         "4": {
-          "win_rate": 0.1789,
-          "tie_rate": 0.0075,
-          "loss_rate": 0.8135,
+          "win_rate": 0.1799,
+          "tie_rate": 0.0077,
+          "loss_rate": 0.8125,
           "simulations": 1000000,
-          "confidence_interval": [0.1782, 0.1797]
+          "confidence_interval": [0.1791, 0.1806]
         },
         "5": {
           "win_rate": 0.1574,
-          "tie_rate": 0.0068,
-          "loss_rate": 0.8358,
+          "tie_rate": 0.0066,
+          "loss_rate": 0.8360,
           "simulations": 1000000,
-          "confidence_interval": [0.1567, 0.1582]
+          "confidence_interval": [0.1567, 0.1581]
         },
         "6": {
-          "win_rate": 0.1454,
-          "tie_rate": 0.0062,
-          "loss_rate": 0.8485,
+          "win_rate": 0.1444,
+          "tie_rate": 0.0061,
+          "loss_rate": 0.8496,
           "simulations": 1000000,
-          "confidence_interval": [0.1447, 0.1461]
+          "confidence_interval": [0.1437, 0.1451]
         },
         "7": {
-          "win_rate": 0.1346,
-          "tie_rate": 0.0057,
-          "loss_rate": 0.8598,
+          "win_rate": 0.1353,
+          "tie_rate": 0.0058,
+          "loss_rate": 0.8589,
           "simulations": 1000000,
-          "confidence_interval": [0.1339, 0.1353]
+          "confidence_interval": [0.1346, 0.1360]
         },
         "8": {
-          "win_rate": 0.1279,
-          "tie_rate": 0.0056,
-          "loss_rate": 0.8665,
+          "win_rate": 0.1278,
+          "tie_rate": 0.0055,
+          "loss_rate": 0.8667,
+          "simulations": 1000000,
+          "confidence_interval": [0.1272, 0.1285]
+        },
+        "9": {
+          "win_rate": 0.1228,
+          "tie_rate": 0.0053,
+          "loss_rate": 0.8719,
+          "simulations": 1000000,
+          "confidence_interval": [0.1222, 0.1235]
+        }
+      }
+    },
+    "33": {
+      "combinations": 6,
+      "equity_vs_random": 0.5227,
+      "equity_vs_tight": 0.4181,
+      "equity_vs_loose": 0.6272,
+      "vs_opponents": {
+        "1": {
+          "win_rate": 0.5227,
+          "tie_rate": 0.0176,
+          "loss_rate": 0.4597,
+          "simulations": 1000000,
+          "confidence_interval": [0.5217, 0.5237]
+        },
+        "2": {
+          "win_rate": 0.3272,
+          "tie_rate": 0.0118,
+          "loss_rate": 0.6611,
+          "simulations": 1000000,
+          "confidence_interval": [0.3263, 0.3281]
+        },
+        "3": {
+          "win_rate": 0.2340,
+          "tie_rate": 0.0093,
+          "loss_rate": 0.7567,
+          "simulations": 1000000,
+          "confidence_interval": [0.2332, 0.2349]
+        },
+        "4": {
+          "win_rate": 0.1870,
+          "tie_rate": 0.0081,
+          "loss_rate": 0.8049,
+          "simulations": 1000000,
+          "confidence_interval": [0.1863, 0.1878]
+        },
+        "5": {
+          "win_rate": 0.1609,
+          "tie_rate": 0.0074,
+          "loss_rate": 0.8316,
+          "simulations": 1000000,
+          "confidence_interval": [0.1602, 0.1617]
+        },
+        "6": {
+          "win_rate": 0.1466,
+          "tie_rate": 0.0068,
+          "loss_rate": 0.8466,
+          "simulations": 1000000,
+          "confidence_interval": [0.1459, 0.1473]
+        },
+        "7": {
+          "win_rate": 0.1356,
+          "tie_rate": 0.0068,
+          "loss_rate": 0.8576,
+          "simulations": 1000000,
+          "confidence_interval": [0.1350, 0.1363]
+        },
+        "8": {
+          "win_rate": 0.1280,
+          "tie_rate": 0.0068,
+          "loss_rate": 0.8653,
           "simulations": 1000000,
           "confidence_interval": [0.1273, 0.1286]
         },
         "9": {
-          "win_rate": 0.1229,
-          "tie_rate": 0.0054,
-          "loss_rate": 0.8717,
+          "win_rate": 0.1221,
+          "tie_rate": 0.0064,
+          "loss_rate": 0.8715,
           "simulations": 1000000,
-          "confidence_interval": [0.1222, 0.1235]
+          "confidence_interval": [0.1214, 0.1227]
+        }
+      }
+    },
+    "44": {
+      "combinations": 6,
+      "equity_vs_random": 0.5458,
+      "equity_vs_tight": 0.4366,
+      "equity_vs_loose": 0.6550,
+      "vs_opponents": {
+        "1": {
+          "win_rate": 0.5458,
+          "tie_rate": 0.0168,
+          "loss_rate": 0.4374,
+          "simulations": 1000000,
+          "confidence_interval": [0.5448, 0.5468]
+        },
+        "2": {
+          "win_rate": 0.3486,
+          "tie_rate": 0.0123,
+          "loss_rate": 0.6391,
+          "simulations": 1000000,
+          "confidence_interval": [0.3477, 0.3495]
+        },
+        "3": {
+          "win_rate": 0.2492,
+          "tie_rate": 0.0104,
+          "loss_rate": 0.7404,
+          "simulations": 1000000,
+          "confidence_interval": [0.2483, 0.2500]
+        },
+        "4": {
+          "win_rate": 0.1971,
+          "tie_rate": 0.0093,
+          "loss_rate": 0.7935,
+          "simulations": 1000000,
+          "confidence_interval": [0.1963, 0.1979]
+        },
+        "5": {
+          "win_rate": 0.1675,
+          "tie_rate": 0.0086,
+          "loss_rate": 0.8239,
+          "simulations": 1000000,
+          "confidence_interval": [0.1668, 0.1682]
+        },
+        "6": {
+          "win_rate": 0.1495,
+          "tie_rate": 0.0086,
+          "loss_rate": 0.8418,
+          "simulations": 1000000,
+          "confidence_interval": [0.1488, 0.1502]
+        },
+        "7": {
+          "win_rate": 0.1379,
+          "tie_rate": 0.0084,
+          "loss_rate": 0.8538,
+          "simulations": 1000000,
+          "confidence_interval": [0.1372, 0.1385]
+        },
+        "8": {
+          "win_rate": 0.1292,
+          "tie_rate": 0.0084,
+          "loss_rate": 0.8624,
+          "simulations": 1000000,
+          "confidence_interval": [0.1286, 0.1299]
+        },
+        "9": {
+          "win_rate": 0.1221,
+          "tie_rate": 0.0081,
+          "loss_rate": 0.8698,
+          "simulations": 1000000,
+          "confidence_interval": [0.1214, 0.1227]
         }
       }
     },

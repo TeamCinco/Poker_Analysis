@@ -28,10 +28,16 @@
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis\hand_ranges.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis\realistic_ranges.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis\equity_calculator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils\json_output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils\csv_exporter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils\performance_profiler.cpp">
@@ -44,6 +50,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\training_data_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\realistic_ranges_command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\console_output.cpp">

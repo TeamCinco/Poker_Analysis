@@ -37,12 +37,15 @@ set(SOURCES
     src/engine/simd_optimizer.cpp
     src/analysis/poker_analyzer.cpp
     src/analysis/hand_ranges.cpp
+    src/analysis/realistic_ranges.cpp
     src/analysis/equity_calculator.cpp
     src/utils/json_output.cpp
+    src/utils/csv_exporter.cpp
     src/utils/performance_profiler.cpp
     src/utils/cpu_features.cpp
     src/commands/command_registry.cpp
     src/commands/training_data_command.cpp
+    src/commands/realistic_ranges_command.cpp
     src/ui/console_output.cpp
     src/ui/progress_display.cpp
 )

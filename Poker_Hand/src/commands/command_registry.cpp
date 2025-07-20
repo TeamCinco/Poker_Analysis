@@ -1,5 +1,6 @@
 #include "command_registry.hpp"
 #include "training_data_command.hpp"
+#include "realistic_ranges_command.hpp"
 
 namespace poker {
 
@@ -8,6 +9,9 @@ std::unordered_map<std::string, std::unique_ptr<CommandBase>> CommandRegistry::c
 void CommandRegistry::register_all_commands() {
     // Register training data command
     register_command(std::make_unique<TrainingDataCommand>());
+    
+    // Register realistic ranges command
+    register_command(std::make_unique<RealisticRangesCommand>());
 }
 
 CommandBase* CommandRegistry::get_command(const std::string& command_name) {
