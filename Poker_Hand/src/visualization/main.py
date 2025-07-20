@@ -1,18 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import sys
+import pandas as pd
 import os
-
-# Add the data folder to the Python path
-data_path = r"C:\Users\cinco\Desktop\Poker_Analysis\Trainer\data"
-sys.path.append(data_path)
-
-# Now import from the data folder
-from hand_ranges import HandRanges
-from chart_data import ChartData
-
-# We'll avoid importing position_filters since it has relative import issues
-# Instead, we'll recreate the needed functionality here
 
 def create_range_chart(range_hands, title):
     """
@@ -80,124 +69,58 @@ def create_range_chart(range_hands, title):
     plt.tight_layout()
     plt.show()
 
-def convert_hands_to_chart_format(hands_dict):
+def load_range_from_csv(csv_path):
     """
-    Convert hand ranges from your data format to chart visualization format.
+    Load poker hand range from CSV file.
     Args:
-        hands_dict: Dictionary with 'paired', 'suited', 'unsuited' keys
+        csv_path (str): Path to the CSV file
     Returns:
-        set: Formatted hands for chart visualization
+        set: Set of hands where in_range=True
     """
-    chart_hands = set()
-    
-    # Add paired hands (e.g., "A-A" becomes "AA")
-    if 'paired' in hands_dict:
-        for hand in hands_dict['paired']:
-            chart_hands.add(hand.replace('-', ''))
-    
-    # Add suited hands (e.g., "A-K" becomes "AKs")
-    if 'suited' in hands_dict:
-        for hand in hands_dict['suited']:
-            chart_hands.add(hand.replace('-', '') + 's')
-    
-    # Add unsuited hands (e.g., "A-K" becomes "AKo")
-    if 'unsuited' in hands_dict:
-        for hand in hands_dict['unsuited']:
-            chart_hands.add(hand.replace('-', '') + 'o')
-    
-    return chart_hands
-
-def get_all_position_hands(position):
-    """
-    Get all hands for a specific position from Chart 1.
-    """
-    all_hands = set()
-    chart_1 = HandRanges.get_chart_1_hands()
-    
-    if position == "any_position":
-        hands_dict = chart_1.get("any_position", {})
-        all_hands.update(convert_hands_to_chart_format(hands_dict))
-    elif position == "mid_late_position":
-        # Include any_position + mid_late_position hands
-        for pos in ["any_position", "mid_late_position"]:
-            hands_dict = chart_1.get(pos, {})
-            all_hands.update(convert_hands_to_chart_format(hands_dict))
-    elif position == "late_position":
-        # Include all positions
-        for pos in ["any_position", "mid_late_position", "late_position"]:
-            hands_dict = chart_1.get(pos, {})
-            all_hands.update(convert_hands_to_chart_format(hands_dict))
-    
-    return all_hands
-
-def convert_chart2_hands_to_format(hand_list):
-    """
-    Convert Chart 2 hands to visualization format.
-    Assumes all hands are both suited and unsuited unless they're pairs.
-    """
-    chart_hands = set()
-    
-    for hand in hand_list:
-        if hand[0] == hand[2]:  # It's a pair (e.g., "A-A")
-            chart_hands.add(hand.replace('-', ''))
-        else:  # It's a non-pair, add both suited and unsuited
-            base_hand = hand.replace('-', '')
-            chart_hands.add(base_hand + 's')
-            chart_hands.add(base_hand + 'o')
-    
-    return chart_hands
+    try:
+        df = pd.read_csv(csv_path)
+        # Filter hands where in_range is True
+        in_range_hands = df[df['in_range'] == True]['hand'].tolist()
+        return set(in_range_hands)
+    except Exception as e:
+        print(f"Error loading CSV {csv_path}: {e}")
+        return set()
 
 if __name__ == '__main__':
-    print("Loading poker hand ranges from data folder...")
+    print("Loading poker hand ranges from CSV data...")
+    
+    # Base path to the output CSV files
+    base_path = "Poker_Hand/output"
     
     try:
-        # --- Example 1: Chart 1 - Any Position Range ---
-        print("Creating Chart 1: Any Position...")
-        any_position_range = get_all_position_hands("any_position")
-        create_range_chart(any_position_range, "Chart 1: Any Position")
+        # --- Example 1: UTG Opening Range (6-max) ---
+        print("Creating UTG Opening Range (6-max)...")
+        utg_range = load_range_from_csv(f"{base_path}/6_player/UTG/opening_raise/low_winrate_hands.csv")
+        create_range_chart(utg_range, "UTG Opening Range (6-max)")
         
-        # --- Example 2: Chart 1 - Mid/Late Position Range ---
-        print("Creating Chart 1: Mid/Late Position...")
-        mid_late_range = get_all_position_hands("mid_late_position")
-        create_range_chart(mid_late_range, "Chart 1: Mid/Late Position")
+        # --- Example 2: Button Opening Range (6-max) ---
+        print("Creating Button Opening Range (6-max)...")
+        btn_range = load_range_from_csv(f"{base_path}/6_player/BTN/opening_raise/low_winrate_hands.csv")
+        create_range_chart(btn_range, "Button Opening Range (6-max)")
         
-        # --- Example 3: Chart 1 - Late Position Range ---
-        print("Creating Chart 1: Late Position...")
-        late_position_range = get_all_position_hands("late_position")
-        create_range_chart(late_position_range, "Chart 1: Late Position")
+        # --- Example 3: CO Opening Range (6-max) ---
+        print("Creating CO Opening Range (6-max)...")
+        co_range = load_range_from_csv(f"{base_path}/6_player/CO/opening_raise/low_winrate_hands.csv")
+        create_range_chart(co_range, "CO Opening Range (6-max)")
         
-        # --- Example 4: Chart 2 - Playable Hands ---
-        print("Creating Chart 2: Playable Hands...")
-        chart2_playable = ChartData.get_playable_hands()
-        playable_range = convert_chart2_hands_to_format(chart2_playable)
-        create_range_chart(playable_range, "Chart 2: Playable Hands")
+        # --- Example 4: UTG 3-bet Range (6-max) ---
+        print("Creating UTG 3-bet Range (6-max)...")
+        utg_3bet_range = load_range_from_csv(f"{base_path}/6_player/UTG/3_bet/low_winrate_hands.csv")
+        create_range_chart(utg_3bet_range, "UTG 3-bet Range (6-max)")
         
-        # --- Example 5: Chart 2 - All Positive Hands (Playable + Marginal) ---
-        print("Creating Chart 2: All Positive Hands...")
-        all_positive = ChartData.get_playable_hands() + ChartData.get_marginal_hands()
-        positive_range = convert_chart2_hands_to_format(all_positive)
-        create_range_chart(positive_range, "Chart 2: All Positive Hands")
-        
-        # --- Example 6: Custom range using your original example ---
-        print("Creating Custom EP1 Open Shoves...")
-        ep1_open_shoves_range = {
-            # Pocket Pairs
-            'AA', 'KK', 'QQ', 'JJ', 'TT', '99', '88', '77', '66', '55',
-            # Suited Aces
-            'AKs', 'AQs', 'AJs', 'ATs', 'A9s', 'A8s', 'A7s', 'A6s', 'A5s', 'A4s', 'A3s',
-            # Suited Kings
-            'KQs', 'KJs', 'KTs', 'K9s',
-            # Suited Queens
-            'QJs', 'QTs',
-            # Other Suited Connectors
-            'JTs',
-            # Offsuit Hands
-            'AKo', 'AQo', 'AJo', 'KQo'
-        }
-        create_range_chart(ep1_open_shoves_range, "EP1 Open Shoves")
+        # --- Example 5: Button 3-bet Range (6-max) ---
+        print("Creating Button 3-bet Range (6-max)...")
+        btn_3bet_range = load_range_from_csv(f"{base_path}/6_player/BTN/3_bet/low_winrate_hands.csv")
+        create_range_chart(btn_3bet_range, "Button 3-bet Range (6-max)")
         
         print("All charts generated successfully!")
+        print("Note: Charts show realistic poker ranges based on simulation data.")
         
     except Exception as e:
         print(f"Error occurred: {e}")
-        print("Make sure matplotlib is installed: pip install matplotlib")
+        print("Make sure pandas and matplotlib are installed: pip install pandas matplotlib")
