@@ -1,0 +1,7 @@
+{
+  "stack_depth_adjustments": {
+    "short_stack": {"bb_range": "10-30", "multiplier": 0.8},
+    "medium_stack": {"bb_range": "30-100", "multiplier": 1.0},
+    "deep_stack": {"bb_range": "100+", "multiplier": 1.2}
+  }
+}

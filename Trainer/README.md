@@ -1,45 +1,127 @@
-# Poker Hand Trainer
+# Modular Poker Hand Trainer
 
-A simple Streamlit app for training poker opening hand ranges.
+A highly modular, streamlit-based poker hand trainer that helps users learn optimal preflop opening ranges based on position. Built with clean architecture principles and extreme modularity (all files under 150 lines).
 
-## Setup
+## 🏗️ Architecture Overview
 
-1. Install dependencies:
-```bash
-pip install -r requirements.txt
+The application is organized into focused, single-responsibility modules:
+
+```
+Trainer/
+├── app.py                          # Main entry point (20 lines)
+├── config/                         # Configuration & settings
+│   ├── settings.py                 # App configuration (58 lines)
+│   └── position_options.py         # Position mappings (35 lines)
+├── data/                          # Hand ranges & training data
+│   ├── hand_ranges.py             # Chart 1 hand data (57 lines)
+│   ├── chart_data.py              # Chart 2 hand data (48 lines)
+│   └── position_filters.py        # Position filtering logic (47 lines)
+├── core/                          # Core business logic
+│   └── session_manager.py         # Session state management (98 lines)
+├── ui/                           # User interface components
+│   ├── card_display.py           # Visual card rendering (101 lines)
+│   └── components.py             # Reusable UI elements (78 lines)
+├── training/                     # Training workflow
+│   ├── answer_processor.py       # Answer handling (58 lines)
+│   └── training_engine.py        # Main training loop (65 lines)
+└── utils/                        # Utility functions
 ```
 
-2. Run the app:
+## 🚀 Quick Start
+
+### Setup
 ```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application
 streamlit run app.py
 ```
 
-## Mobile Access
-
-To access from your mobile device:
-
-1. When you run the app, Streamlit will show you a "Network URL" (usually something like `http://192.168.1.XXX:8501`)
-2. Use this URL on your mobile device while connected to the same WiFi network
-3. Or use the `--server.address 0.0.0.0` flag when running:
+### Mobile Access
 ```bash
+# For mobile access on same WiFi network
 streamlit run app.py --server.address 0.0.0.0
 ```
+Then access via the Network URL shown in terminal.
 
-## Features
+## ✨ Features
 
-- **Simple Interface**: Just two buttons - FOLD or PLAY
-- **Hand Ranges**: Based on the provided poker hand charts
-- **Score Tracking**: Shows your accuracy percentage
-- **Mobile Friendly**: Large buttons and text for easy mobile use
-- **No Accounts**: No login required, just start training immediately
+- **Clean Modular Architecture**: Each file has single responsibility, under 150 lines
+- **Visual Card Display**: Beautiful card rendering with proper suits and colors
+- **Position-Based Training**: Multiple position scenarios (Any Position, Mid/Late, Late Position)
+- **Real-time Scoring**: Track accuracy and progress
+- **Responsive Design**: Works great on desktop and mobile
+- **Easy to Extend**: Modular design makes adding new features simple
 
-## How to Use
+## 🎯 Training Modes
 
-1. Look at the displayed poker hand (e.g., "A-As", "K-Qo", "7-7")
-2. Decide whether you should FOLD or PLAY this hand
-3. Click the appropriate button
-4. See if you were correct and learn the position context
-5. Click "Next Hand" to continue
-6. Use "Reset Training" to start over with fresh stats
+- **Any Position**: Premium hands playable from any position
+- **Mid/Late Position**: Expanded ranges for better positions
+- **Late Position**: Full range including speculative hands
+- **All Positions**: Combined training across all scenarios
 
-The app will randomly show you hands from the training ranges and track your progress!
+## 🏛️ Architecture Benefits
+
+### **Maintainability**
+- Single responsibility principle
+- Clear separation of concerns
+- Easy to locate and modify specific functionality
+
+### **Scalability**
+- Easy to add new training modes
+- Simple to extend with new position types
+- Modular components can be reused
+
+### **Testing**
+- Each module can be tested independently
+- Clear interfaces between components
+- Isolated business logic
+
+### **Future Extensions**
+Ready for enhancements like:
+- 3-Bet and 4-Bet training scenarios
+- Multi-position statistics tracking
+- Advanced hand range scenarios
+- Tournament vs Cash game modes
+
+## 📁 Module Details
+
+### **Configuration Layer** (`config/`)
+- `settings.py`: Application constants, UI settings, color schemes
+- `position_options.py`: Position mappings and display names
+
+### **Data Layer** (`data/`)
+- `hand_ranges.py`: Chart 1 position-based hand ranges
+- `chart_data.py`: Chart 2 alternative training data
+- `position_filters.py`: Logic for filtering hands by position
+
+### **Core Layer** (`core/`)
+- `session_manager.py`: Streamlit session state management
+
+### **UI Layer** (`ui/`)
+- `card_display.py`: Visual card rendering with CSS styling
+- `components.py`: Reusable UI components (buttons, selectors, feedback)
+
+### **Training Layer** (`training/`)
+- `answer_processor.py`: Handle user answers and scoring
+- `training_engine.py`: Main training workflow orchestration
+
+## 🎮 How to Use
+
+1. **Select Position**: Choose which position range to train
+2. **View Hand**: See the displayed poker hand
+3. **Make Decision**: Click FOLD or PLAY based on optimal strategy  
+4. **Get Feedback**: See if you were correct and learn the reasoning
+5. **Continue**: Progress through randomized hands
+6. **Track Progress**: Monitor your accuracy percentage
+
+## 🔧 Technical Notes
+
+- **Framework**: Streamlit for rapid UI development
+- **State Management**: Centralized session state handling
+- **Styling**: Custom CSS for card visualization
+- **Data Structure**: Tuple-based hand representation (hand, position, action)
+- **Randomization**: Shuffled hand presentation for varied training
+
+Built with clean code principles and extreme modularity for long-term maintainability and extensibility.
