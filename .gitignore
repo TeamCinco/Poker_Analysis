@@ -1,0 +1,9 @@
+/output
+/build
+*.csv
+*output
+*build
+output/
+build/
+/.output
+/.build

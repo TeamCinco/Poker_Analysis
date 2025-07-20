@@ -432,6 +432,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\command_registry.cpp" />
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\training_data_command.cpp" />
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\realistic_ranges_command.cpp" />
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\postflop_analysis_command.cpp" />
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\console_output.cpp" />
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\progress_display.cpp" />
   </ItemGroup>

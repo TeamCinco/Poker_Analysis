@@ -1,6 +1,7 @@
 #include "command_registry.hpp"
 #include "training_data_command.hpp"
 #include "realistic_ranges_command.hpp"
+#include "postflop_analysis_command.hpp"
 
 namespace poker {
 
@@ -12,6 +13,9 @@ void CommandRegistry::register_all_commands() {
     
     // Register realistic ranges command
     register_command(std::make_unique<RealisticRangesCommand>());
+    
+    // Register comprehensive postflop analysis command
+    register_command(std::make_unique<PostflopAnalysisCommand>());
 }
 
 CommandBase* CommandRegistry::get_command(const std::string& command_name) {

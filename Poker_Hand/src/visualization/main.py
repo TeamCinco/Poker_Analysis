@@ -2,13 +2,18 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import pandas as pd
 import os
+from openpyxl import Workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl.styles import Font, PatternFill
+from openpyxl.drawing.image import Image
 
-def create_range_chart(range_hands, title):
+def create_range_chart(range_hands, title, output_path):
     """
-    Creates a poker hand range chart that visually highlights specific hands.
+    Creates a poker hand range chart that visually highlights specific hands and saves it.
     Args:
         range_hands (set): A set of strings for the hands to highlight (e.g., {'AA', 'KK', 'AKs'}).
         title (str): The title to display above the chart.
+        output_path (str): Path to save the PNG file.
     """
     # --- 1. Setup the Chart and Ranking Order ---
     ranks = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
@@ -67,7 +72,10 @@ def create_range_chart(range_hands, title):
     ax.set_title(title, color='white', fontsize=28, fontweight='bold', pad=20)
     
     plt.tight_layout()
-    plt.show()
+    
+    # Save the chart instead of showing it
+    plt.savefig(output_path, dpi=150, bbox_inches='tight', facecolor='#2d2d2d')
+    plt.close()  # Close to free memory
 
 def load_range_from_csv(csv_path):
     """
@@ -86,41 +94,176 @@ def load_range_from_csv(csv_path):
         print(f"Error loading CSV {csv_path}: {e}")
         return set()
 
+def create_excel_workbook(table_size, positions, actions, base_path, output_path, charts_path):
+    """
+    Create Excel workbook with sheets for each position containing range data and embedded PNG charts.
+    """
+    wb = Workbook()
+    wb.remove(wb.active)  # Remove default sheet
+    
+    for position in positions:
+        ws = wb.create_sheet(title=position)
+        
+        # Create headers
+        headers = ['Hand'] + [action.replace('_', '-').title() for action in actions]
+        for col_num, header in enumerate(headers, 1):
+            cell = ws.cell(row=1, column=col_num, value=header)
+            cell.font = Font(bold=True)
+            cell.fill = PatternFill(start_color="CCCCCC", end_color="CCCCCC", fill_type="solid")
+        
+        # Generate all possible hands
+        ranks = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+        all_hands = []
+        
+        # Pairs
+        for rank in ranks:
+            all_hands.append(rank + rank)
+        
+        # Suited and offsuit hands
+        for i in range(len(ranks)):
+            for j in range(i + 1, len(ranks)):
+                all_hands.append(ranks[i] + ranks[j] + 's')
+                all_hands.append(ranks[i] + ranks[j] + 'o')
+        
+        all_hands.sort()
+        
+        # Fill in hand data
+        for row_num, hand in enumerate(all_hands, 2):
+            ws.cell(row=row_num, column=1, value=hand)
+            
+            for col_num, action in enumerate(actions, 2):
+                csv_file = f"{base_path}/{table_size}_player/{position}/{action}/low_winrate_hands.csv"
+                
+                if os.path.exists(csv_file):
+                    range_hands = load_range_from_csv(csv_file)
+                    in_range = "YES" if hand in range_hands else "NO"
+                    
+                    cell = ws.cell(row=row_num, column=col_num, value=in_range)
+                    if in_range == "YES":
+                        cell.fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")
+                        cell.font = Font(color="FFFFFF", bold=True)
+                else:
+                    ws.cell(row=row_num, column=col_num, value="N/A")
+        
+        # Add PNG charts to the right of the data table
+        chart_start_col = len(headers) + 2  # Start 2 columns after the data
+        chart_row = 2  # Start from row 2
+        
+        for i, action in enumerate(actions):
+            # Construct the PNG file path
+            table_suffix = "6max" if table_size == "6" else "9max"
+            png_file = f"{charts_path}/{position}_{action}_{table_suffix}.png"
+            
+            if os.path.exists(png_file):
+                # Add a header for the chart
+                header_cell = ws.cell(row=chart_row - 1, column=chart_start_col + i * 15, 
+                                    value=f"{action.replace('_', '-').title()} Chart")
+                header_cell.font = Font(bold=True, size=14)
+                
+                # Load and embed the image
+                img = Image(png_file)
+                
+                # Resize image to fit nicely in Excel (adjust size as needed)
+                img.width = 400  # pixels
+                img.height = 400  # pixels
+                
+                # Position the image
+                img.anchor = f"{chr(ord('A') + chart_start_col + i * 15 - 1)}{chart_row}"
+                ws.add_image(img)
+        
+        # Adjust column widths for better visibility
+        for col in range(1, len(headers) + 1):
+            ws.column_dimensions[chr(ord('A') + col - 1)].width = 12
+    
+    wb.save(output_path)
+
 if __name__ == '__main__':
     print("Loading poker hand ranges from CSV data...")
     
-    # Base path to the output CSV files
+    # Base paths
     base_path = "Poker_Hand/output"
+    output_base = r"C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\visualization\output"
+    
+    # Create output directories
+    os.makedirs(f"{output_base}/6_player/charts", exist_ok=True)
+    os.makedirs(f"{output_base}/9_player/charts", exist_ok=True)
+    
+    # Define positions for each table size
+    positions_6max = ["UTG", "HJ", "CO", "BTN", "SB", "BB"]
+    positions_9max = ["UTG", "UTG1", "MP1", "MP2", "HJ", "CO", "BTN", "SB", "BB"]
+    
+    # Define actions to visualize
+    actions = ["opening_raise", "3_bet", "4_bet"]
     
     try:
-        # --- Example 1: UTG Opening Range (6-max) ---
-        print("Creating UTG Opening Range (6-max)...")
-        utg_range = load_range_from_csv(f"{base_path}/6_player/UTG/opening_raise/low_winrate_hands.csv")
-        create_range_chart(utg_range, "UTG Opening Range (6-max)")
+        print("=" * 60)
+        print("GENERATING COMPREHENSIVE POKER RANGE VISUALIZATIONS")
+        print("=" * 60)
         
-        # --- Example 2: Button Opening Range (6-max) ---
-        print("Creating Button Opening Range (6-max)...")
-        btn_range = load_range_from_csv(f"{base_path}/6_player/BTN/opening_raise/low_winrate_hands.csv")
-        create_range_chart(btn_range, "Button Opening Range (6-max)")
+        # === 6-MAX CHARTS ===
+        print("\n" + "="*30)
+        print("6-MAX RANGES")
+        print("="*30)
         
-        # --- Example 3: CO Opening Range (6-max) ---
-        print("Creating CO Opening Range (6-max)...")
-        co_range = load_range_from_csv(f"{base_path}/6_player/CO/opening_raise/low_winrate_hands.csv")
-        create_range_chart(co_range, "CO Opening Range (6-max)")
+        for action in actions:
+            print(f"\n--- 6-MAX {action.upper().replace('_', '-')} RANGES ---")
+            for position in positions_6max:
+                csv_file = f"{base_path}/6_player/{position}/{action}/low_winrate_hands.csv"
+                
+                if os.path.exists(csv_file):
+                    print(f"Creating {position} {action.replace('_', '-')} range (6-max)...")
+                    range_hands = load_range_from_csv(csv_file)
+                    title = f"{position} {action.replace('_', '-').title()} Range (6-max)"
+                    output_path = f"{output_base}/6_player/charts/{position}_{action}_6max.png"
+                    create_range_chart(range_hands, title, output_path)
+                else:
+                    print(f"Skipping {position} {action} (6-max) - file not found")
         
-        # --- Example 4: UTG 3-bet Range (6-max) ---
-        print("Creating UTG 3-bet Range (6-max)...")
-        utg_3bet_range = load_range_from_csv(f"{base_path}/6_player/UTG/3_bet/low_winrate_hands.csv")
-        create_range_chart(utg_3bet_range, "UTG 3-bet Range (6-max)")
+        # === 9-MAX CHARTS ===
+        print("\n" + "="*30)
+        print("9-MAX RANGES") 
+        print("="*30)
         
-        # --- Example 5: Button 3-bet Range (6-max) ---
-        print("Creating Button 3-bet Range (6-max)...")
-        btn_3bet_range = load_range_from_csv(f"{base_path}/6_player/BTN/3_bet/low_winrate_hands.csv")
-        create_range_chart(btn_3bet_range, "Button 3-bet Range (6-max)")
+        for action in actions:
+            print(f"\n--- 9-MAX {action.upper().replace('_', '-')} RANGES ---")
+            for position in positions_9max:
+                csv_file = f"{base_path}/9_player/{position}/{action}/low_winrate_hands.csv"
+                
+                if os.path.exists(csv_file):
+                    print(f"Creating {position} {action.replace('_', '-')} range (9-max)...")
+                    range_hands = load_range_from_csv(csv_file)
+                    title = f"{position} {action.replace('_', '-').title()} Range (9-max)"
+                    output_path = f"{output_base}/9_player/charts/{position}_{action}_9max.png"
+                    create_range_chart(range_hands, title, output_path)
+                else:
+                    print(f"Skipping {position} {action} (9-max) - file not found")
         
-        print("All charts generated successfully!")
-        print("Note: Charts show realistic poker ranges based on simulation data.")
+        # === CREATE EXCEL FILES ===
+        print("\n" + "="*30)
+        print("CREATING EXCEL FILES")
+        print("="*30)
+        
+        print("Creating 6-max Excel workbook...")
+        excel_6max = f"{output_base}/6_player/6max_ranges.xlsx"
+        charts_6max = f"{output_base}/6_player/charts"
+        create_excel_workbook("6", positions_6max, actions, base_path, excel_6max, charts_6max)
+        
+        print("Creating 9-max Excel workbook...")
+        excel_9max = f"{output_base}/9_player/9max_ranges.xlsx"
+        charts_9max = f"{output_base}/9_player/charts"
+        create_excel_workbook("9", positions_9max, actions, base_path, excel_9max, charts_9max)
+        
+        print("\n" + "="*60)
+        print("ALL FILES GENERATED SUCCESSFULLY!")
+        print("="*60)
+        print(f"Output saved to: {output_base}")
+        print("Generated files:")
+        print("• PNG charts for all position/action combinations")
+        print("• 6max_ranges.xlsx - Excel file with all 6-max ranges")
+        print("• 9max_ranges.xlsx - Excel file with all 9-max ranges")
+        print("• Each Excel sheet represents a position with YES/NO for each hand in each action")
         
     except Exception as e:
         print(f"Error occurred: {e}")
-        print("Make sure pandas and matplotlib are installed: pip install pandas matplotlib")
+        print("Make sure pandas, matplotlib, and openpyxl are installed:")
+        print("pip install pandas matplotlib openpyxl")
