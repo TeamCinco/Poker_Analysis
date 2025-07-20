@@ -86,7 +86,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -110,10 +110,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -152,7 +152,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
@@ -182,10 +182,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -225,7 +225,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -250,10 +250,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -292,7 +292,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -316,10 +316,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\core;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\engine;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\analysis;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands;C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -427,6 +427,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils\json_output.cpp" />
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils\performance_profiler.cpp" />
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils\cpu_features.cpp" />
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\command_registry.cpp" />
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\training_data_command.cpp" />
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\console_output.cpp" />
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\progress_display.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

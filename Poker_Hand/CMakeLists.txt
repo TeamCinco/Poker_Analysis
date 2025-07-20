@@ -23,6 +23,8 @@ include_directories(src/core)
 include_directories(src/engine)
 include_directories(src/analysis)
 include_directories(src/utils)
+include_directories(src/commands)
+include_directories(src/ui)
 
 # Source files
 set(SOURCES
@@ -39,6 +41,10 @@ set(SOURCES
     src/utils/json_output.cpp
     src/utils/performance_profiler.cpp
     src/utils/cpu_features.cpp
+    src/commands/command_registry.cpp
+    src/commands/training_data_command.cpp
+    src/ui/console_output.cpp
+    src/ui/progress_display.cpp
 )
 
 # Create executable

@@ -40,6 +40,18 @@
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\utils\cpu_features.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\command_registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\training_data_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\console_output.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\progress_display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\CMakeLists.txt" />
