@@ -1,15 +1,21 @@
-### to run:
+To run the comprehensive flop analysis:
 
-1. enter the poker_hands folder and create the build
-2. enter the build/release folder and enter cd 
+**Step 1: Build the project**
+```powershell
+cd Poker_Hand
+build.bat
+```
 
-.\poker_analysis_generator ranges
-
-3. win. 
-
-# OR 
-
-4. run from the poker_hands folder like this with the build:
-
+**Step 2: Run the analysis**
+```powershell
 cd build
-.\Release\poker_analysis_generator ranges
+.\Release\poker_analysis_generator flop
+```
+
+**Available Commands:**
+- `boards` - Board texture classification (1-2 min)
+- `flop` - Complete flop analysis with range evolution (30-60 min)
+- `ranges` - Original preflop range analysis
+
+**Output Location:**
+Results saved to `Poker_Hand/output/flop_analysis/` with comprehensive CSV files for machine learning training.

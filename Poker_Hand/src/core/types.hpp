@@ -102,6 +102,76 @@ enum class Action : uint8_t {
     FOUR_BET = 4
 };
 
+// Board texture classification system
+enum class BoardTexture : uint8_t {
+    // Primary Classifications
+    DRY_RAINBOW = 0,        // A72r, K83r (disconnected, rainbow)
+    WET_CONNECTED = 1,      // 987ss, JT9cc (straight/flush draws)
+    PAIRED = 2,             // AAx, KKx, 77x (trips potential)
+    MONOTONE = 3,           // As7s2s (flush completed)
+    TWO_TONE = 4,           // AhKh7c (flush draw present)
+    
+    // Connectivity Levels  
+    HIGHLY_CONNECTED = 5,   // 876, JT9 (multiple straight draws)
+    MODERATELY_CONNECTED = 6, // A65, KJ8 (some connectivity)
+    DISCONNECTED = 7,       // A72, K62 (minimal connectivity)
+    
+    // Card Height Classifications
+    HIGH_BOARD = 8,         // AKQ, KQJ (premium pairs help)
+    MIDDLE_BOARD = 9,       // JT9, 987 (middle pairs/draws)
+    LOW_BOARD = 10,         // 765, 432 (low pairs/straight draws)
+    
+    // Special Cases
+    ACE_HIGH_DRY = 11,      // A72r (nut advantage to pfr)
+    BROADWAY_HEAVY = 12,    // KQJ, QJT (high card advantage)
+    WHEEL_TEXTURE = 13      // A23, 234 (wheel straight potential)
+};
+
+// Board analysis structure
+struct BoardAnalysis {
+    BoardTexture primary_texture;
+    BoardTexture secondary_texture;
+    
+    // Quantified metrics (0.0 - 1.0)
+    double connectivity_index;    // How connected (straight draws)
+    double flush_potential;       // Flush draw strength
+    double pair_potential;        // Set/two-pair potential  
+    double high_card_bias;        // Advantage to high cards
+    
+    // Strategic implications
+    double expected_cbet_freq;    // Based on texture
+    double expected_checkraise_freq;
+    double range_advantage_pfr;   // How much PFR benefits
+    
+    // Board string representation
+    std::string board_string;     // e.g., "As7h2c"
+    
+    BoardAnalysis() : primary_texture(BoardTexture::DRY_RAINBOW), 
+                     secondary_texture(BoardTexture::DRY_RAINBOW),
+                     connectivity_index(0.0), flush_potential(0.0), 
+                     pair_potential(0.0), high_card_bias(0.0),
+                     expected_cbet_freq(0.0), expected_checkraise_freq(0.0),
+                     range_advantage_pfr(0.0), board_string("") {}
+};
+
+// Flop action analysis structure
+struct FlopActionResult {
+    std::string hand;                    // e.g., "AA", "KQs", "72o"
+    std::string position;                // UTG, HJ, CO, BTN, SB, BB
+    std::string preflop_action;          // open, 3bet, 4bet, call
+    BoardAnalysis board_analysis;        // Complete board classification
+    std::string flop_action;             // cbet, check, check_raise, call, fold
+    double action_frequency;             // How often this action is taken
+    double win_rate_after_action;        // Win rate if taking this action
+    double expected_value;               // EV of the action
+    uint64_t simulations_run;            // Monte Carlo simulations
+    
+    FlopActionResult() : hand(""), position(""), preflop_action(""),
+                        flop_action(""), action_frequency(0.0),
+                        win_rate_after_action(0.0), expected_value(0.0),
+                        simulations_run(0) {}
+};
+
 // Simulation result structure
 struct SimulationResult {
     double win_rate;

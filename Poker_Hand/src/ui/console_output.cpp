@@ -41,7 +41,12 @@ void ConsoleOutput::print_system_info() {
 
 void ConsoleOutput::print_usage() {
     std::cout << "Usage: poker_analysis_generator [mode]" << std::endl;
-    std::cout << "  data    - Generate comprehensive poker training data (default)" << std::endl;
+    std::cout << "Available modes:" << std::endl;
+    std::cout << "  data     - Generate comprehensive poker training data (default)" << std::endl;
+    std::cout << "  ranges   - Generate realistic poker range analysis with CSV export" << std::endl;
+    std::cout << "  postflop - Generate comprehensive postflop analysis dataset" << std::endl;
+    std::cout << "  boards   - Analyze and classify poker board textures" << std::endl;
+    std::cout << "  flop     - Comprehensive flop analysis with board texture integration" << std::endl;
     std::cout << std::endl;
 }
 

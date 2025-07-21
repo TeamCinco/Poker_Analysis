@@ -47,6 +47,8 @@ set(SOURCES
     src/commands/training_data_command.cpp
     src/commands/realistic_ranges_command.cpp
     src/commands/postflop_analysis_command.cpp
+    src/commands/board_analysis_command.cpp
+    src/commands/flop_analysis_command.cpp
     src/ui/console_output.cpp
     src/ui/progress_display.cpp
 )

@@ -58,6 +58,9 @@
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\postflop_analysis_command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\commands\board_analysis_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\ui\console_output.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
