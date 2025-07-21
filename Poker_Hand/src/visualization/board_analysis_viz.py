@@ -42,6 +42,9 @@ def load_board_data(csv_path):
     try:
         df = pd.read_csv(csv_path)
         print(f"Loaded {len(df)} boards from {os.path.basename(csv_path)}")
+        print(f"  - Columns: {list(df.columns)}")
+        if 'primary_texture' in df.columns:
+            print(f"  - Textures: {df['primary_texture'].unique()}")
         return df
     except Exception as e:
         print(f"Error loading {csv_path}: {e}")
@@ -56,12 +59,15 @@ def create_texture_distribution_chart(df, title, output_path, colors):
     texture_counts = df['primary_texture'].value_counts()
     
     # Create pie chart with custom colors
+    color_list = [colors['primary'], colors['secondary'], colors['accent'], 
+                  colors['warning'], colors['success'], colors['neutral']]
+    chart_colors = color_list[:len(texture_counts)]
+    
     wedges, texts, autotexts = ax.pie(texture_counts.values, 
                                       labels=texture_counts.index,
                                       autopct='%1.1f%%',
                                       startangle=90,
-                                      colors=[colors['primary'], colors['secondary'], colors['accent'], 
-                                             colors['warning'], colors['success'], colors['neutral']][:len(texture_counts)])
+                                      colors=chart_colors)
     
     # Enhance text appearance
     for autotext in autotexts:
@@ -132,7 +138,7 @@ def create_strategic_frequency_heatmap(df, title, output_path, colors):
     # Create heatmap
     sns.heatmap(strategic_data.T, annot=True, cmap='RdYlBu_r', 
                 cbar_kws={'label': 'Frequency/Index Value'},
-                linewidths=0.5, ax=ax)
+                linewidths=0.5, ax=ax, fmt='.3f')
     
     ax.set_title(title, color='white', fontsize=18, fontweight='bold', pad=20)
     ax.set_xlabel('Board Texture', color='white', fontsize=12)
@@ -196,9 +202,9 @@ def create_c_bet_frequency_analysis(df, title, output_path, colors):
     
     # 4. Flush potential vs frequencies
     ax4.scatter(df['flush_potential'], df['expected_cbet_freq'], 
-               color=colors['accent'], alpha=0.7, label='C-bet Freq')
+               color=colors['accent'], alpha=0.7, label='C-bet Freq', s=60)
     ax4.scatter(df['flush_potential'], df['expected_checkraise_freq'], 
-               color=colors['warning'], alpha=0.7, label='Check-raise Freq')
+               color=colors['warning'], alpha=0.7, label='Check-raise Freq', s=60)
     ax4.set_xlabel('Flush Potential', color='white')
     ax4.set_ylabel('Frequency', color='white') 
     ax4.set_title('Frequencies vs Flush Potential', color='white', fontweight='bold')
@@ -217,21 +223,26 @@ def create_c_bet_frequency_analysis(df, title, output_path, colors):
     plt.close()
     print(f"Created: {os.path.basename(output_path)}")
 
-def create_board_comparison_chart(dfs, output_path, colors):
+def create_board_comparison_chart(dfs, labels, output_path, colors):
     """Create comparison chart across different board categories"""
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(16, 12))
     fig.patch.set_facecolor('#1e1e1e')
     
-    # Prepare comparison data
-    categories = ['Dry', 'Wet', 'Paired', 'Special']
+    # Filter out None dataframes
+    valid_data = [(label, df) for label, df in zip(labels, dfs) if df is not None and len(df) > 0]
+    
+    if len(valid_data) == 0:
+        print("No valid data for comparison chart")
+        return
+    
+    valid_labels, valid_dfs = zip(*valid_data)
     
     # 1. Average metrics by category
     metrics = ['expected_cbet_freq', 'expected_checkraise_freq', 'connectivity_index', 'range_advantage_pfr']
     
     data_for_comparison = {}
-    for i, (name, df) in enumerate(zip(categories, dfs)):
-        if df is not None:
-            data_for_comparison[name] = df[metrics].mean()
+    for label, df in valid_data:
+        data_for_comparison[label] = df[metrics].mean()
     
     # Create grouped bar chart
     comparison_df = pd.DataFrame(data_for_comparison).T
@@ -239,23 +250,25 @@ def create_board_comparison_chart(dfs, output_path, colors):
     x = np.arange(len(comparison_df.index))
     width = 0.2
     
+    color_list = [colors['primary'], colors['secondary'], colors['accent'], colors['warning']]
+    
     for i, metric in enumerate(metrics):
         bars = ax1.bar(x + i*width, comparison_df[metric], width, 
                       label=metric.replace('_', ' ').title(),
-                      color=[colors['primary'], colors['secondary'], colors['accent'], colors['warning']][i])
+                      color=color_list[i])
     
     ax1.set_xlabel('Board Categories', color='white')
     ax1.set_ylabel('Average Value', color='white')
     ax1.set_title('Strategic Metrics by Board Category', color='white', fontweight='bold')
     ax1.set_xticks(x + width * 1.5)
-    ax1.set_xticklabels(comparison_df.index)
+    ax1.set_xticklabels(comparison_df.index, rotation=45, ha='right')
     ax1.legend()
     ax1.tick_params(colors='white')
     ax1.set_facecolor('#2d2d2d')
     
     # 2. Board count comparison
-    counts = [len(df) if df is not None else 0 for df in dfs]
-    bars2 = ax2.bar(categories, counts, color=[colors['primary'], colors['secondary'], colors['accent'], colors['warning']])
+    counts = [len(df) for _, df in valid_data]
+    bars2 = ax2.bar(valid_labels, counts, color=color_list[:len(valid_labels)])
     ax2.set_ylabel('Number of Boards', color='white')
     ax2.set_title('Board Count by Category', color='white', fontweight='bold')
     ax2.tick_params(colors='white')
@@ -266,10 +279,9 @@ def create_board_comparison_chart(dfs, output_path, colors):
                 ha='center', va='bottom', color='white', fontweight='bold')
     
     # 3. Connectivity distribution comparison
-    for i, (name, df) in enumerate(zip(categories, dfs)):
-        if df is not None:
-            ax3.hist(df['connectivity_index'], alpha=0.7, label=name, bins=15,
-                    color=[colors['primary'], colors['secondary'], colors['accent'], colors['warning']][i])
+    for i, (label, df) in enumerate(valid_data):
+        ax3.hist(df['connectivity_index'], alpha=0.7, label=label, bins=15,
+                color=color_list[i % len(color_list)])
     
     ax3.set_xlabel('Connectivity Index', color='white')
     ax3.set_ylabel('Frequency', color='white')
@@ -279,11 +291,10 @@ def create_board_comparison_chart(dfs, output_path, colors):
     ax3.set_facecolor('#2d2d2d')
     
     # 4. C-bet vs Check-raise frequency scatter
-    for i, (name, df) in enumerate(zip(categories, dfs)):
-        if df is not None:
-            ax4.scatter(df['expected_cbet_freq'], df['expected_checkraise_freq'], 
-                       alpha=0.7, label=name, s=60,
-                       color=[colors['primary'], colors['secondary'], colors['accent'], colors['warning']][i])
+    for i, (label, df) in enumerate(valid_data):
+        ax4.scatter(df['expected_cbet_freq'], df['expected_checkraise_freq'], 
+                   alpha=0.7, label=label, s=60,
+                   color=color_list[i % len(color_list)])
     
     ax4.set_xlabel('C-bet Frequency', color='white')
     ax4.set_ylabel('Check-raise Frequency', color='white')
@@ -303,33 +314,36 @@ def create_board_comparison_chart(dfs, output_path, colors):
     plt.close()
     print(f"Created: {os.path.basename(output_path)}")
 
-def generate_summary_report(dfs, output_path):
+def generate_summary_report(datasets, output_path):
     """Generate a text summary report of the analysis"""
     with open(output_path, 'w') as f:
         f.write("BOARD ANALYSIS SUMMARY REPORT\n")
         f.write("=" * 50 + "\n\n")
         
-        categories = ['Comprehensive', 'Dry', 'Wet', 'Paired', 'Special Cases']
-        
-        for name, df in zip(categories, dfs):
-            if df is not None:
-                f.write(f"{name.upper()} BOARDS:\n")
+        for name, df in datasets.items():
+            if df is not None and len(df) > 0:
+                f.write(f"{name.upper().replace('_', ' ')} BOARDS:\n")
                 f.write(f"Total boards analyzed: {len(df)}\n")
                 
                 if 'primary_texture' in df.columns:
-                    f.write(f"Most common texture: {df['primary_texture'].mode().iloc[0]}\n")
+                    textures = df['primary_texture'].value_counts()
+                    f.write(f"Most common texture: {textures.index[0]} ({textures.iloc[0]} boards)\n")
+                    f.write(f"Texture distribution: {dict(textures)}\n")
                 
                 f.write(f"Average connectivity: {df['connectivity_index'].mean():.3f}\n")
                 f.write(f"Average c-bet frequency: {df['expected_cbet_freq'].mean():.3f}\n")
                 f.write(f"Average check-raise frequency: {df['expected_checkraise_freq'].mean():.3f}\n")
                 f.write(f"Average range advantage: {df['range_advantage_pfr'].mean():.3f}\n")
+                f.write(f"Average flush potential: {df['flush_potential'].mean():.3f}\n")
+                f.write(f"Average pair potential: {df['pair_potential'].mean():.3f}\n")
                 f.write("\n" + "-" * 30 + "\n\n")
         
         f.write("KEY INSIGHTS:\n")
-        f.write("• Dry boards have highest c-bet frequencies\n")
-        f.write("• Wet boards favor check-raise strategies\n") 
-        f.write("• Paired boards require balanced approaches\n")
+        f.write("• Highly Connected boards show lower c-bet frequencies\n")
+        f.write("• Paired boards have higher c-bet frequencies due to range advantage\n")
+        f.write("• Monotone boards favor check-raise strategies\n")
         f.write("• Connectivity strongly correlates with action frequencies\n")
+        f.write("• High card bias affects range advantages significantly\n")
     
     print(f"Created summary report: {os.path.basename(output_path)}")
 
@@ -341,17 +355,20 @@ def main():
     
     # Setup
     colors = setup_style()
-    base_output_path = "Poker_Hand/src/visualization/output"
+    
+    # Updated paths
+    base_output_path = r"C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\src\visualization\output"
+    input_base_path = r"C:\Users\cinco\Desktop\Poker_Analysis\Poker_Hand\build\output\board_analysis"
+    
     create_output_structure(base_output_path)
     
-    # Input files
-    input_base = "Poker_Hand/output/board_analysis"
+    # Input files with full paths
     files = {
-        'comprehensive': f"{input_base}/comprehensive_board_analysis.csv",
-        'dry': f"{input_base}/dry_boards_analysis.csv",
-        'wet': f"{input_base}/wet_boards_analysis.csv", 
-        'paired': f"{input_base}/paired_boards_analysis.csv",
-        'special': f"{input_base}/special_cases_analysis.csv"
+        "comprehensive": os.path.join(input_base_path, "comprehensive_board_analysis.csv"),
+        "dry": os.path.join(input_base_path, "dry_boards_analysis.csv"),
+        "wet": os.path.join(input_base_path, "wet_boards_analysis.csv"),
+        "paired": os.path.join(input_base_path, "paired_boards_analysis.csv"),
+        "special": os.path.join(input_base_path, "special_cases_analysis.csv")
     }
     
     # Load all datasets
@@ -363,8 +380,17 @@ def main():
     
     # Generate individual category charts
     for category, df in datasets.items():
-        if df is not None:
-            category_path = f"{base_output_path}/board_analysis/{category}_boards"
+        if df is not None and len(df) > 0:
+            # Create category-specific folder
+            if category == "comprehensive":
+                category_path = f"{base_output_path}/board_analysis/comprehensive"
+            else:
+                category_path = f"{base_output_path}/board_analysis/{category}_boards"
+            
+            # Ensure the directory exists
+            os.makedirs(category_path, exist_ok=True)
+            
+            print(f"\nGenerating charts for {category} category...")
             
             # Texture distribution
             create_texture_distribution_chart(
@@ -388,14 +414,16 @@ def main():
     
     # Generate comparison charts
     comparison_dfs = [datasets['dry'], datasets['wet'], datasets['paired'], datasets['special']]
+    comparison_labels = ['Dry', 'Wet', 'Paired', 'Special']
+    
     create_board_comparison_chart(
-        comparison_dfs, 
+        comparison_dfs, comparison_labels,
         f"{base_output_path}/board_analysis/comparisons/category_comparison.png", 
         colors)
     
     # Generate summary report
     generate_summary_report(
-        [datasets['comprehensive'], datasets['dry'], datasets['wet'], datasets['paired'], datasets['special']],
+        datasets,
         f"{base_output_path}/board_analysis/summary_report.txt")
     
     print("\n" + "=" * 60)
