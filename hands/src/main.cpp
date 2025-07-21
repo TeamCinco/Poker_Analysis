@@ -1,4 +1,4 @@
-#include "analysis/decision_engine.hpp"
+#include "analysis/accelerated_decision_engine.hpp"
 #include <iostream>
 #include <string>
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
     }
     
     try {
-        poker::DynamicStrategyEngine engine;
+        poker::AcceleratedDecisionEngine engine;
         
         if (argc > 1) {
             // Discover strategy for specific table size
