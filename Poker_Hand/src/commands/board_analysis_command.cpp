@@ -24,7 +24,7 @@ void BoardAnalysisCommand::execute() {
     
     try {
         std::cout << "Starting board texture analysis..." << std::endl;
-        std::cout << "Output directory: ./output/board_analysis/" << std::endl << std::endl;
+        std::cout << "Output directory: Poker_Hand/output/board_analysis/" << std::endl << std::endl;
         
         create_output_directories();
         
@@ -509,7 +509,7 @@ void BoardAnalysisCommand::test_dry_boards() {
         }
     }
     
-    export_board_classifications(analyses, "output/board_analysis/dry_boards_analysis.csv");
+    export_board_classifications(analyses, "../output/board_analysis/dry_boards_analysis.csv");
 }
 
 void BoardAnalysisCommand::test_wet_boards() {
@@ -527,7 +527,7 @@ void BoardAnalysisCommand::test_wet_boards() {
         }
     }
     
-    export_board_classifications(analyses, "output/board_analysis/wet_boards_analysis.csv");
+    export_board_classifications(analyses, "../output/board_analysis/wet_boards_analysis.csv");
 }
 
 void BoardAnalysisCommand::test_paired_boards() {
@@ -545,7 +545,7 @@ void BoardAnalysisCommand::test_paired_boards() {
         }
     }
     
-    export_board_classifications(analyses, "output/board_analysis/paired_boards_analysis.csv");
+    export_board_classifications(analyses, "../output/board_analysis/paired_boards_analysis.csv");
 }
 
 void BoardAnalysisCommand::test_special_cases() {
@@ -571,7 +571,7 @@ void BoardAnalysisCommand::test_special_cases() {
         }
     }
     
-    export_board_classifications(analyses, "output/board_analysis/special_cases_analysis.csv");
+    export_board_classifications(analyses, "../output/board_analysis/special_cases_analysis.csv");
 }
 
 void BoardAnalysisCommand::analyze_representative_boards() {
@@ -605,7 +605,7 @@ void BoardAnalysisCommand::analyze_representative_boards() {
         }
     }
     
-    export_board_classifications(analyses, "output/board_analysis/comprehensive_board_analysis.csv");
+    export_board_classifications(analyses, "../output/board_analysis/comprehensive_board_analysis.csv");
 }
 
 void BoardAnalysisCommand::export_board_classifications(const std::vector<BoardAnalysis>& analyses, const std::string& filename) {
@@ -635,7 +635,7 @@ void BoardAnalysisCommand::export_board_classifications(const std::vector<BoardA
 
 void BoardAnalysisCommand::create_output_directories() {
     try {
-        std::filesystem::create_directories("output/board_analysis");
+        std::filesystem::create_directories("../output/board_analysis");
     } catch (const std::exception& e) {
         std::cerr << "Error creating output directories: " << e.what() << std::endl;
         throw;
