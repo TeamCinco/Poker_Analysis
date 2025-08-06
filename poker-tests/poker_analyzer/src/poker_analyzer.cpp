@@ -120,7 +120,7 @@ inline double PokerAnalyzer::calculateHandStrengthFast(const std::array<Card, 2>
 void PokerAnalyzer::workerThread(WorkerData* data) {
     FlopResult bestResult;
     bestResult.avgStrength = -1;
-    bestResult.wins = 0;
+    bestResult.wins = 0;  // Start at 0
     bestResult.ties = 0;
     
     std::vector<Card>& availableCards = data->availableCards;
@@ -144,12 +144,14 @@ void PokerAnalyzer::workerThread(WorkerData* data) {
         double strength = calculateHandStrengthFast(data->holeCards, currentFlop);
         
         if (strength > bestResult.avgStrength) {
+            // Found a new best - reset counters
             bestResult.flop = currentFlop;
             bestResult.avgStrength = strength;
-            bestResult.wins = 1;
-            bestResult.ties = 0;
+            bestResult.wins = 1;  // First occurrence of this strength
+            bestResult.ties = 0;  // No ties yet
         } else if (strength == bestResult.avgStrength) {
-            bestResult.ties++;
+            // Found another flop with same best strength
+            bestResult.wins++;   // INCREMENT WINS TOO!
         }
     }
     
@@ -189,17 +191,24 @@ PokerAnalyzer::FlopResult PokerAnalyzer::findBestFlopParallel(const std::array<C
         worker.join();
     }
     
-    // Find best result across all workers
+    // Find best result across all workers and combine counts
     FlopResult bestOverall;
     bestOverall.avgStrength = -1;
     bestOverall.wins = 0;
     bestOverall.ties = 0;
     
+    // First pass: find the best strength
     for (const auto& data : workerData) {
         if (data.result.avgStrength > bestOverall.avgStrength) {
-            bestOverall = data.result;
-        } else if (data.result.avgStrength == bestOverall.avgStrength) {
-            bestOverall.ties += data.result.ties;
+            bestOverall.avgStrength = data.result.avgStrength;
+            bestOverall.flop = data.result.flop;
+        }
+    }
+    
+    // Second pass: sum all occurrences of the best strength
+    for (const auto& data : workerData) {
+        if (data.result.avgStrength == bestOverall.avgStrength) {
+            bestOverall.wins += data.result.wins;
         }
     }
     
@@ -210,7 +219,7 @@ void PokerAnalyzer::analyzeAllHandsParallel() {
     auto startTime = std::chrono::high_resolution_clock::now();
     
     std::ofstream csvFile("poker_flop_analysis.csv");
-    csvFile << "Hand,Best_Flop,Average_Strength,Hand_Type,Wins,Ties\n";
+    csvFile << "Hand,Best_Flop,Average_Strength,Hand_Type,Total_Best_Flops,Percentage\n";  // Updated header
     
     std::vector<Card> deck = createDeck();
     int handCount = 0;
@@ -237,6 +246,9 @@ void PokerAnalyzer::analyzeAllHandsParallel() {
             
             FlopResult result = findBestFlopParallel(holeCards);
             
+            // Calculate percentage of flops that achieved best result
+            double percentage = (100.0 * result.wins) / MONTE_CARLO_RUNS;
+            
             // Determine hand type name
             std::string handTypeName;
             int handTypeInt = (int)(result.avgStrength / 1000);
@@ -258,7 +270,7 @@ void PokerAnalyzer::analyzeAllHandsParallel() {
                     << std::fixed << std::setprecision(2) << result.avgStrength << ","
                     << handTypeName << ","
                     << result.wins << ","
-                    << result.ties << "\n";
+                    << std::setprecision(4) << percentage << "%\n";
         }
     }
     

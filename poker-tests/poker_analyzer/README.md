@@ -29,7 +29,12 @@ A high-performance C++ tool that calculates post-flop probabilities for every po
 3. **Run the analyzer:**
    ```bash
    # Windows
-   .\bin\PokerFlopAnalyzer.exe
+   in bin/Release there is this file:
+   
+   PokerFlopAnalyzer.exe
+
+   run it with ./PokerFlopAnalyzer.exe
+
    
    # Linux/macOS  
    ./bin/PokerFlopAnalyzer
