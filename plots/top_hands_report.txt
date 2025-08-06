@@ -1,0 +1,53 @@
+TOP 50 STARTING HANDS BY AVERAGE STRENGTH
+==================================================
+
+ 1. T9s  - Strength: 8050.00 - Best: Straight Flush
+ 2. J9s  - Strength: 8050.00 - Best: Straight Flush
+ 3. Q9s  - Strength: 8050.00 - Best: Straight Flush
+ 4. K9s  - Strength: 8050.00 - Best: Straight Flush
+ 5. T9s  - Strength: 8050.00 - Best: Straight Flush
+ 6. J9s  - Strength: 8050.00 - Best: Straight Flush
+ 7. Q9s  - Strength: 8050.00 - Best: Straight Flush
+ 8. K9s  - Strength: 8050.00 - Best: Straight Flush
+ 9. T9s  - Strength: 8050.00 - Best: Straight Flush
+10. J9s  - Strength: 8050.00 - Best: Straight Flush
+11. Q9s  - Strength: 8050.00 - Best: Straight Flush
+12. K9s  - Strength: 8050.00 - Best: Straight Flush
+13. T9s  - Strength: 8050.00 - Best: Straight Flush
+14. J9s  - Strength: 8050.00 - Best: Straight Flush
+15. Q9s  - Strength: 8050.00 - Best: Straight Flush
+16. K9s  - Strength: 8050.00 - Best: Straight Flush
+17. JTs  - Strength: 8050.00 - Best: Straight Flush
+18. QTs  - Strength: 8050.00 - Best: Straight Flush
+19. KTs  - Strength: 8050.00 - Best: Straight Flush
+20. JTs  - Strength: 8050.00 - Best: Straight Flush
+21. QTs  - Strength: 8050.00 - Best: Straight Flush
+22. KTs  - Strength: 8050.00 - Best: Straight Flush
+23. JTs  - Strength: 8050.00 - Best: Straight Flush
+24. QTs  - Strength: 8050.00 - Best: Straight Flush
+25. KTs  - Strength: 8050.00 - Best: Straight Flush
+26. JTs  - Strength: 8050.00 - Best: Straight Flush
+27. QTs  - Strength: 8050.00 - Best: Straight Flush
+28. KTs  - Strength: 8050.00 - Best: Straight Flush
+29. QJs  - Strength: 8050.00 - Best: Straight Flush
+30. KJs  - Strength: 8050.00 - Best: Straight Flush
+31. QJs  - Strength: 8050.00 - Best: Straight Flush
+32. KJs  - Strength: 8050.00 - Best: Straight Flush
+33. QJs  - Strength: 8050.00 - Best: Straight Flush
+34. KJs  - Strength: 8050.00 - Best: Straight Flush
+35. QJs  - Strength: 8050.00 - Best: Straight Flush
+36. KJs  - Strength: 8050.00 - Best: Straight Flush
+37. KQs  - Strength: 8050.00 - Best: Straight Flush
+38. KQs  - Strength: 8050.00 - Best: Straight Flush
+39. KQs  - Strength: 8050.00 - Best: Straight Flush
+40. KQs  - Strength: 8050.00 - Best: Straight Flush
+41. 98s  - Strength: 8045.00 - Best: Straight Flush
+42. T8s  - Strength: 8045.00 - Best: Straight Flush
+43. J8s  - Strength: 8045.00 - Best: Straight Flush
+44. Q8s  - Strength: 8045.00 - Best: Straight Flush
+45. 98s  - Strength: 8045.00 - Best: Straight Flush
+46. T8s  - Strength: 8045.00 - Best: Straight Flush
+47. J8s  - Strength: 8045.00 - Best: Straight Flush
+48. Q8s  - Strength: 8045.00 - Best: Straight Flush
+49. 98s  - Strength: 8045.00 - Best: Straight Flush
+50. T8s  - Strength: 8045.00 - Best: Straight Flush

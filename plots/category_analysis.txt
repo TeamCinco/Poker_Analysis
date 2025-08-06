@@ -1,0 +1,21 @@
+HAND CATEGORY ANALYSIS
+==============================
+
+POCKET PAIR:
+  Count: 78
+  Avg Strength: 7035.92
+  Best Hand: KK
+  Worst Hand: AA
+
+SUITED:
+  Count: 312
+  Avg Strength: 7626.36
+  Best Hand: T9s
+  Worst Hand: A6s
+
+OFFSUIT:
+  Count: 936
+  Avg Strength: 7037.00
+  Best Hand: KQo
+  Worst Hand: A2o
+
